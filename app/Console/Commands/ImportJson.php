@@ -23,11 +23,20 @@ class ImportJson extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
-    {
-        $path = storage_path() . "/app/json/" . $this->argument("filename") . ".json";
+    public function handle() {
+        $path = $this->filenameToPath();
         $contents = file_get_contents($path);
         $data = json_decode($contents);
         # Keys: ["name","address","checked","description","interest","date_of_birth","email","account","credit_card"]
+    }
+
+    private function filenameToPath() {
+        $pathTo = storage_path() . "/app/json/";
+        $extension = ".json";
+        $filename = $this->argument("filename");
+        if (!str_contains($filename, $extension)) {
+            $filename .= $extension;
+        }
+        return $pathTo . $filename;
     }
 }
