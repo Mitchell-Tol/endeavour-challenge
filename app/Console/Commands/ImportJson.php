@@ -11,7 +11,7 @@ class ImportJson extends Command
      *
      * @var string
      */
-    protected $signature = 'endeavour:import-json';
+    protected $signature = 'endeavour:import-json {filename}';
 
     /**
      * The console command description.
@@ -25,7 +25,9 @@ class ImportJson extends Command
      */
     public function handle()
     {
-        //
-        $this->info("The command was successful");
+        $path = storage_path() . "/app/json/" . $this->argument("filename") . ".json";
+        $contents = file_get_contents($path);
+        $data = json_decode($contents);
+        # Keys: ["name","address","checked","description","interest","date_of_birth","email","account","credit_card"]
     }
 }
